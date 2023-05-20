@@ -10,27 +10,28 @@
 
 執行檔為：main0516v1.py
 
-![01](https://github.com/gubemiu/stock/assets/128680931/f39110c4-6c40-47ac-bb5e-7f9695a12416)
+![01](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/d82a86d7-fabc-4250-a56f-7ccff0ac3457)
 
-![02](https://github.com/gubemiu/stock/assets/128680931/6bbb9ec7-7e91-4bde-aec0-a4df96be9457)
+![02](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/addee1a5-e119-47e0-b556-f1469c820da5)
 
-![03](https://github.com/gubemiu/stock/assets/128680931/4bde913a-5a30-4775-8cf9-33ec95d23693)
+![03](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/0e72c8be-1d01-4420-9b36-f1c193b2d4ee)
 
-![04](https://github.com/gubemiu/stock/assets/128680931/06cfabc3-2f62-497a-874d-d9b37d9d8cf2)
+![04](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/e76f1f81-f048-4683-a992-2def301997d5)
 
-![05](https://github.com/gubemiu/stock/assets/128680931/f8180f68-4f19-4844-b624-11993a219ee0)
+![05](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/7fc9a172-e1f6-440b-aa7f-2de5715803d8)
 
-![06](https://github.com/gubemiu/stock/assets/128680931/03b25a71-d44e-4b55-bd04-fe52ff81ab20)
+![06](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/343d8088-d1bc-4f3e-8e79-9b9f00569a1e)
 
-![07](https://github.com/gubemiu/stock/assets/128680931/16f171d2-9195-4b23-9854-326eded65a59)
+![07](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/ecaab9e5-3baf-401c-8b82-b3c6ce99e7d4)
 
-![08](https://github.com/gubemiu/stock/assets/128680931/2f79529d-d708-4dad-8c75-ce2f2097f27e)
+![08](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/32981a39-07b8-48c3-9212-05208bbf36d2)
 
-![09](https://github.com/gubemiu/stock/assets/128680931/07805bbe-155e-4b0a-acd7-a0856f7c2abc)
+![09](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/f650d5e0-d0f2-4642-9eaa-08271834454b)
 
-![10](https://github.com/gubemiu/stock/assets/128680931/031cf31a-58a5-43a8-a96b-439f73b1556a)
+![10](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/ccec6a95-e7dc-4c0b-9221-4632b4e22b10)
 
 
+作者：[邱秀慧](https://github.com/gubemiu)/賴弈旭 ethanazazaz3@gmail.com
 
 指導老師：RobertHsu 徐國堂 老師
 https://github.com/roberthsu2003
