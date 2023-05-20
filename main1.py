@@ -1,30 +1,22 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from PIL import Image,ImageTk
 import datetime
 from tkinter.simpledialog import askinteger
-import calendar
-from tkcalendar import Calendar 
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import yfinance as yf
-from lxml import etree
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import mplfinance as mpf
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 import twstock
-import gradio as gr #可以變成網頁互動
+from backtesting import Backtest, Strategy
+from backtesting.lib import crossover
+from backtesting.test import SMA 
+import pandas as pd 
 
-
-from backtesting import Backtest, Strategy #引入回測和交易策略功能
-from backtesting.lib import crossover #從lib子模組引入判斷均線交會功能
-from backtesting.test import SMA #從test子模組引入繪製均線功能
-import pandas as pd #引入pandas讀取CSV檔
-from bokeh.models.formatters import DatetimeTickFormatter
 
 #window========================
 
