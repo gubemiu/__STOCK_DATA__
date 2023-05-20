@@ -26,7 +26,7 @@ from backtesting.lib import crossover
 from backtesting.test import SMA 
 import pandas as pd 
 from bokeh.models.formatters import DatetimeTickFormatter
-from query import Calculationstarts
+import query
 from download import DownloadCSV
 from sma import SmaCross1, SmaCross2
 from clear import clearData
@@ -56,10 +56,10 @@ class Window(tk.Tk):
     #八大窗格:設定
 
         # mainFrame1===========================
-        self.BigFrame1 = tk.Frame(mainFrame1,height=100,width=450) #輸入
+        self.BigFrame1 = tk.Frame(mainFrame1,height=100,width=450)
         self.BigFrame1.grid(row=0, column=3, rowspan=2, columnspan=2, padx=30, pady=30,sticky="nw")
 
-        self.BigFrame2 = tk.Frame(mainFrame1,height=900,width=450) #treeview
+        self.BigFrame2 = tk.Frame(mainFrame1,height=900,width=450)
         self.BigFrame2.grid(row=2, column=3, rowspan=2, columnspan=2, padx=5, pady=5,sticky="nw")
 
         ## mainFrame2 =========================
@@ -69,7 +69,6 @@ class Window(tk.Tk):
         scrollbar = tk.Scrollbar(mainFrame2, orient="vertical", command=canvas.yview)
         scrollbar.pack(side="right", fill="y")
 
-        # 設定畫布的範圍
         canvas.configure(yscrollcommand=scrollbar.set)
         canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
         canvas.bind_all("<MouseWheel>", lambda event: canvas.yview_scroll(int(-1*(event.delta/120)), "units"))
@@ -145,6 +144,8 @@ class Window(tk.Tk):
         self.stockIDentry  = tk.Entry(self.stockframe,textvariable=self.stockIDvar,bd=5)
         #加上預設值，測試方便=============
         self.stockIDentry.grid(row=0, column=1, sticky=tk.W)
+        code = self.stockIDentry.get() 
+
         
     #起始日輸入=============
         datelabel=tk.Label(self.stockframe, text="輸入查詢起始日:",font=('Arial',15))
@@ -157,13 +158,15 @@ class Window(tk.Tk):
         #self.dateentry  = tk.Entry(self.stockframe,text=tk.StringVar(),bd=5)
         self.dateentry  = tk.Entry(self.stockframe,textvariable=self.Datevar,bd=5)
         #加上預設值，測試方便=============
-        self.dateentry.grid(row=1, column=1,sticky=tk.W)
-    
+        self.dateentry.grid(row=1, column=1,sticky=tk.W)        
+        # startDate = self.dateentry.get()        
+        # query.Calculationstarts(self, code, startDate) # 將 self 傳遞給 Calculationstarts 函式        
+            
     #按鈕設定==============
         self.enterFrame = tk.Frame(self.BigFrame1)
         self.enterFrame.pack()
 
-        subminButton1  = tk.Button(self.enterFrame, font=('Microsoft JhengHei',15),text="搜尋",command=Calculationstarts)
+        subminButton1  = tk.Button(self.enterFrame, font=('Microsoft JhengHei',15),text="搜尋",command=query.Calculationstarts)
         subminButton1.grid(row=0, column=0, padx=(0,0))
 
         subminButton2  = tk.Button(self.enterFrame, font=('Microsoft JhengHei',15),text="下載歷史資料",command=DownloadCSV)
@@ -207,7 +210,7 @@ class Window(tk.Tk):
         self.historyFrame.pack()
 
         columns = ('#1','#2', '#3', '#4', '#5', '#6', '#7', '#8', '#9')
-        self.tree = ttk.Treeview(self.historyFrame, columns=columns, show='headings')
+        self.tree = ttk.Treeview(self.historyFrame, columns=columns, show='headings')        
         self.tree.configure(height=22)
         self.tree.heading('#1', text='日期')
         self.tree.column("#1", minwidth=0, width=80)
