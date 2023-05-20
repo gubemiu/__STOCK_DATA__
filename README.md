@@ -8,7 +8,7 @@
 
 另外，還有提供優化交易策略的功能，由程式計算出合適的交易方式，找出個股最適合的均線判定，來做為未來交易策略的參考，以提升報酬率。
 
-執行檔為：main.py
+執行檔：main.py
 
 ![01](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/d82a86d7-fabc-4250-a56f-7ccff0ac3457)
 
