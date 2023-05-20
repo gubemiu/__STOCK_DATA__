@@ -30,13 +30,13 @@ from bokeh.models.formatters import DatetimeTickFormatter
 
 #資料查詢設定 ==========================
 def Calculationstarts(self):
-    
-    #參數設定
-    stockCode = self.stockIDentry.get()    
+    sns.set()
+    plt.style.use('fivethirtyeight')
+    stockCode = self.stockIDentry.get()
     symbol = yf.Ticker(stockCode + ".TW")
-    stockName = symbol.info['symbol']       
-    endDate = datetime.datetime.now().date()
-    # date_str = datetime.datetime(2021,1, 1)
+    stockName = symbol.info['symbol']                   
+    endDate = datetime.datetime.now().date() + datetime.timedelta(days=1)
+    date_str = datetime.datetime(2021,1, 1)
     startDate = datetime.datetime.strptime(self.dateentry.get(), '%Y-%m-%d').date()
 
 
@@ -54,7 +54,6 @@ def Calculationstarts(self):
     self.yf_df.dropna(inplace=True)
     print(self.yf_df)
 
-
     #在Treeview中顯示股價資料=========================================
     for index, row in self.yf_df.iterrows():
         date = index.strftime('%Y-%m-%d')
@@ -68,30 +67,38 @@ def Calculationstarts(self):
         BIAS=str(row['BIAS%'])
         self.tree_row = (date, open_price, high_price, low_price, close_price, adj_close_price, volume, daily_change,BIAS)
         self.tree.insert("", tk.END, values=self.tree_row)
+            
 
 
 #《第三視窗》========================
 
     #個股走勢圖 ======================================
-    sns.set()
-    plt.style.use('fivethirtyeight')
-    
+    #布林通道
+    self.yf_df['stddev'] = self.yf_df['Close'].rolling(window=20).std()
+    self.yf_df['upper'] = self.yf_df['20MA'] + 2 * self.yf_df['stddev']
+    self.yf_df['lower'] = self.yf_df['20MA'] - 2 * self.yf_df['stddev']
+
     self.fig1 = plt.figure(figsize=(8, 5))
+    
     plt.title(f'{stockCode}PRICE TREND', pad=30, fontsize=20, fontweight='bold',color='#a37e67')
+
     
     plt.xlabel("Date",fontweight='bold',color='#749cb8', fontsize=13)
     plt.ylabel("Closing Price",fontweight='bold',color='#749cb8', fontsize=13, rotation=0, labelpad=80)
     plt.gca().xaxis.set_label_coords(0.94, -0.07)
     plt.gca().yaxis.set_label_coords(0.06, 1.02)
     plt.plot(self.yf_df["Close"], label='Close', color='navy', linewidth=1.8)
+    # 加上20MA
+
     plt.plot(self.yf_df['20MA'], label='20MA', linewidth=1.5,color='#e6880e')
+
     plt.legend()
     
     #改圖片布局================
-    plt.tight_layout()
-    plt.xticks(fontsize=8.5, fontweight='bold') 
+    plt.tight_layout()#自動調整圖片佈局，讓title、xlabel 和 ylabel不會超出顯示範圍
+    plt.xticks(fontsize=8.5, fontweight='bold') #調整XY軸座標字體大小
     plt.yticks(fontsize=10, fontweight='bold')
-    plt.subplots_adjust(left=0.08, right=0.98, bottom=0.12, top=0.85) 
+    plt.subplots_adjust(left=0.08, right=0.98, bottom=0.12, top=0.85) #調整四邊留白
 
     # 加self宣告為共用物件
     #self.fig1 = fig1
@@ -99,29 +106,9 @@ def Calculationstarts(self):
     self.fig1_canvas.get_tk_widget().grid(row=0, column=0, sticky="nw")
 
 
-
 #《第四視窗》========================
-    #K線圖 ======================================
-    mcolor = mpf.make_marketcolors(up='r', down='g', inherit=True)     
-    self.fig3,axes = mpf.plot(self.yf_df, figsize=(5, 5), returnfig=True,type='candle',mav=(5,20,60), volume=True, figratio=(3,3), figscale=0.8, title=f'{stockCode}', style=mstyle, ylabel='Price', xlabel='Date',ylabel_lower='volume', xrotation=360)
-
-    #改圖片布局(無效用)================
-    #self.fig3.subplots_adjust(left=0.05, right=0.98, bottom=0.05, top=0.95)
-
-    # 加self宣告為共用物件
-    self.fig3_canvas = FigureCanvasTkAgg(self.fig3,self.BigFrame7)
-    self.fig3_canvas.get_tk_widget().pack(side=tk.TOP,fill=tk.BOTH,expand=1)
-
-    # 加self宣告為共用物件
-    self.fig3_canvas = FigureCanvasTkAgg(self.fig3,self.BigFrame4)
-    self.fig3_canvas.get_tk_widget().pack(side=tk.TOP,fill=tk.BOTH,expand=1)
-
-
-
-#《第五視窗》========================
 
     #熱力圖(數據集的特徵之間的相關性) ======================================
-    sns.set_style("white")
     self.fig2 = plt.figure(figsize=(8, 7.5))
 
     plt.title('熱力圖', pad=20, fontsize=20, fontweight='bold',color='#a37e67')        
@@ -132,31 +119,53 @@ def Calculationstarts(self):
     plt.xticks(fontsize=9),plt.yticks(fontsize=9)        
 
     #改圖片布局================
-    plt.tight_layout()
-    plt.subplots_adjust(left=0.07, right=1.03, bottom=0.15, top=0.9)
+    plt.tight_layout()#自動調整圖片佈局
+    #plt.subplots_adjust(left=0.05, right=1.03, bottom=0.2, top=0.85) #調整四邊留白  
+    plt.subplots_adjust(left=0.07, right=1.03, bottom=0.15, top=0.9) #調整四邊留白      
 
+
+    #fig2_canvas = FigureCanvasTkAgg(fig2, self.BigFrame6)
+    #fig2_canvas.get_tk_widget().grid(row=0, column=0, sticky="nw")
 
     # 加self宣告為共用物件
-    self.fig2_canvas = FigureCanvasTkAgg(self.fig2, self.BigFrame5) 
+    self.fig2_canvas = FigureCanvasTkAgg(self.fig2, self.BigFrame4) 
     self.fig2_canvas.get_tk_widget().grid(row=0, column=0, sticky="nw") 
 
 
 
+#《第五視窗》========================
+    #K線圖 ======================================
+    mcolor = mpf.make_marketcolors(up='r', down='g', inherit=True)
+    mstyle =mpf.make_mpf_style(base_mpf_style='yahoo',marketcolors=mcolor,rc={'font.family':'Microsoft JhengHei'})   
+    # 判斷股票市場，設定圖表標題
+        
+    # 繪製 K 線圖
+    self.fig3,axes = mpf.plot(self.yf_df, figsize=(8, 6), returnfig=True, type='candle', mav=(5,20,60), volume=True, figratio=(8,6), figscale=1, style=mstyle, ylabel='Price', xlabel='Date', ylabel_lower='volume', xrotation=360)
 
+    #self.fig3,axes = mpf.plot(self.yf_df, figsize=(8, 6), returnfig=True,type='candle',mav=(5,20,60), volume=True, figratio=(8,6), figscale=1, title=f'{stockCode} ({stockNameC})', style=mstyle, ylabel='Price', xlabel='Date',ylabel_lower='volume', xrotation=360)
+    
+    #改圖片布局(不知為何無效用)================
+    self.fig3.subplots_adjust(left=0.05, right=0.98, bottom=0.05, top=0.95, wspace=0)
+
+
+    # 加self宣告為共用物件
+    self.fig3_canvas = FigureCanvasTkAgg(self.fig3,self.BigFrame5)
+    #self.fig3_canvas.draw()
+    self.fig3_canvas.get_tk_widget().pack(side=tk.TOP,fill=tk.BOTH,expand=1)
 
 
 #《第六視窗》========================
     # 盒鬚圖==============================================================
-
     self.fig4 = plt.figure(figsize=(8, 6.5))
     sns.boxplot(data=self.yf_df[['Open', 'High', 'Low',  'Close','5MA', '20MA']])
+
     plt.title('盒鬚圖', pad=20, fontsize=20, fontweight='bold',color='#a37e67')
 
     #改圖片布局================
-    plt.tight_layout()
-    plt.xticks(fontsize=15, fontweight='bold')
-    plt.yticks(fontsize=15, fontweight='bold')
-    plt.subplots_adjust(left=0.15, right=0.95, bottom=0.12, top=0.85)        
+    plt.tight_layout()#自動調整圖片佈局，讓title、xlabel 和 ylabel不會超出顯示範圍
+    plt.xticks(fontsize=8.5, fontweight='bold') #調整XY軸座標字體大小
+    plt.yticks(fontsize=10, fontweight='bold')
+    plt.subplots_adjust(left=0.15, right=0.95, bottom=0.12, top=0.85) #調整四邊留白        
 
     self.fig4_canvas = FigureCanvasTkAgg(self.fig4,self.BigFrame6)
     #self.fig4_canvas.draw()
@@ -166,7 +175,7 @@ def Calculationstarts(self):
     #散點圖================================================================
     
     self.fig5=sns.pairplot(self.yf_df[['Close', 'Open', 'High', 'Low']],hue="Close",palette="husl").fig        
-    plt.title('散點圖', x=1.29, y=2, fontsize=16)
+    plt.title('散點圖', x=1.25, y=1.9, fontsize=16)
 
     self.fig5_canvas = FigureCanvasTkAgg(self.fig5, self.BigFrame7)
     self.fig5_canvas.get_tk_widget().config(width=800, height=800)
@@ -175,6 +184,7 @@ def Calculationstarts(self):
 
 
 #《第8視窗》========================
+
 
 #程式撰寫=====================
 
@@ -224,10 +234,14 @@ def Calculationstarts(self):
     print('最近收盤價:', latest_close_price, '次日漲停:', data["UpperLimit_new"][0], '次日跌停:', data["LowerLimit_new"][0])
     print(data.loc[:, ['PredictedPrice', 'UpperLimit_new', 'LowerLimit_new', 'PredictedPrice_new']].head(5))
 
+
+
+    # 選擇差異最小的當預測股價===================================================
     data['Difference'] = abs(data['PredictedPrice_new'] - latest_close_price)
     sorted_data = data.sort_values('Difference')
     best_prediction = round(sorted_data.iloc[1]['PredictedPrice_new'],2)
     print('最佳預測股價：', best_prediction)
+
 
 
 # 結果呈獻=====================
@@ -235,9 +249,5 @@ def Calculationstarts(self):
     # 最佳預測股價       
     self.moneyoutputLabel.configure(text=best_prediction)
     # 股票名稱
-    if stockCode[0].isdigit():
-        self.companyoutputLabel.configure(text=f'{stockCode} ')
-    else:
-        self.companyoutputLabel.configure(text=f'{stockCode}')        
-
+    self.companyoutputLabel.configure(text=f'{stockCode}')
 
