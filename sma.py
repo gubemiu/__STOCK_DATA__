@@ -72,3 +72,4 @@ def SmaCross2(self):
     self.text3.pack(expand=True, fill="both")
     self.text3.insert("end", self.opt_result_sqn.to_string(index=True))
 
+

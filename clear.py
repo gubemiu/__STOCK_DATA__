@@ -35,39 +35,36 @@ def clearData(self):
     self.companyoutputLabel.configure(text="______________")
     self.stockIDentry.delete(0, tk.END)
     self.dateentry.delete(0, tk.END)
-    if hasattr(self, 'fig1_canvas'): #趨勢圖
-        self.fig1.clf() # 清除 self.fig1 的內容
-        self.fig1_canvas.draw() # 重新畫一次 self.fig1_canvas
-        self.fig1_canvas.get_tk_widget().pack_forget() # 改成 pack_forget()
-    if hasattr(self, 'fig2_canvas'): #熱力圖
+    if hasattr(self, 'fig1_canvas'):
+        self.fig1.clf()
+        self.fig1_canvas.draw()
+        self.fig1_canvas.get_tk_widget().pack_forget()
+    if hasattr(self, 'fig2_canvas'): 
         self.fig2.clf() 
         self.fig2_canvas.draw() 
         self.fig2_canvas.get_tk_widget().pack_forget()                    
-    if hasattr(self, 'fig3_canvas'): #K線圖
+    if hasattr(self, 'fig3_canvas'):
         # self.fig3.clf()
         self.fig3_canvas.draw() 
         self.fig3_canvas.get_tk_widget().pack_forget()   
-    if hasattr(self, 'fig4_canvas'): #盒鬚圖
+    if hasattr(self, 'fig4_canvas'):
         # self.fig4.clf() 
         self.fig4_canvas.draw() 
         self.fig4_canvas.get_tk_widget().pack_forget()
-    if hasattr(self, 'fig5_canvas'): #散點圖
+    if hasattr(self, 'fig5_canvas'):
         # self.fig5.clf() 
         self.fig5_canvas.draw() 
         self.fig5_canvas.get_tk_widget().pack_forget()
-    for row_id in self.tree.get_children(): #treeview
+    for row_id in self.tree.get_children():
         self.tree.delete(row_id)                 
-    #三個text
     if hasattr(self, 'text1'):
         self.text1.delete("1.0", "end")
         self.text1.destroy() 
     if hasattr(self, 'result'):
         del self.result
-
     if hasattr(self, 'text2'):
         self.text2.delete("1.0", "end")
         self.text2.destroy() 
-
     if hasattr(self, 'text3'):
         self.text3.delete("1.0", "end")
         self.text3.destroy() 

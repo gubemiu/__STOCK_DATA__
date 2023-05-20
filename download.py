@@ -38,3 +38,4 @@ def DownloadCSV(self):
         #self.yf_df.to_csv(file_path + f'./{stockCode}_tw_stock.csv', index=False)
         self.yf_df.to_csv(file_path)
 
+
