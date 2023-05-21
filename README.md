@@ -31,7 +31,7 @@
 ![10](https://github.com/gubemiu/__STOCK_DATA__/assets/128680931/ccec6a95-e7dc-4c0b-9221-4632b4e22b10)
 
 
-作者：[邱秀慧](https://github.com/gubemiu)/賴弈旭 ethanazazaz3@gmail.com
+作者：[邱秀慧](https://github.com/gubemiu)/[賴弈旭](https://github.com/laiethan)
 
 指導老師：RobertHsu 徐國堂 老師
 https://github.com/roberthsu2003
